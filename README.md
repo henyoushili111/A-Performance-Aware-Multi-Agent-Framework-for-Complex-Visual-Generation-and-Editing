@@ -44,3 +44,43 @@ conda activate AIGC-Nexus
 
 # 安装核心依赖
 pip install -r requirements.txt
+
+2. 配置模型与 API 服务
+本项目默认支持通过 vLLM 部署的开源模型（如 Qwen3-VL/14B/8B）以及 OpenAI 的 GPT-4o 接口。请在项目根目录复制一份环境变量文件并填入你的配置：
+
+Bash
+cp .env.example .env
+在 .env 中配置：
+
+Code snippet
+# LLM & MLLM 配置
+OPENAI_API_KEY="sk-your-api-key"
+VLLM_ENDPOINT="http://localhost:8000/v1"
+VLLM_MODEL_NAME="Qwen/Qwen3-14B-Instruct"
+
+# 工具库路径配置 (Stable Diffusion, FLUX 等)
+TOOLS_CACHE_DIR="/path/to/your/models"
+3. 运行极简 Demo
+只需几行代码，即可体验 AIGC-Nexus 强大的端到端视觉任务规划与生成能力：
+
+Python
+from AIGC-Nexus import AgentSystem
+from AIGC-Nexus.config import load_config
+
+# 1. 加载系统配置与预置的工具性能矩阵
+config = load_config("configs/default_pipeline.yaml")
+
+# 2. 初始化 PerfGuard 多智能体系统
+agent_sys = AgentSystem(config)
+
+# 3. 输入复杂的生成/编辑指令
+user_prompt = "生成一张赛博朋克风格的夜景街道，重点是一辆飞驰的重型摩托车在空中留下长长的蓝色光轨，背景是巨大的全息广告牌正在播放汉字。"
+
+# 4. 执行自动拆解、模型路由与最终生成
+result = agent_sys.run(prompt=user_prompt)
+
+# 保存最终结果
+result.final_image.save("output_cyberpunk.png")
+
+# 查看 Agent 的思考与调度轨迹
+print(result.planning_trajectory)
