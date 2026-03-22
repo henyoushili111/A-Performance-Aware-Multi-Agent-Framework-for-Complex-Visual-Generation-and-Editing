@@ -1,18 +1,18 @@
-# 🛡️ 面向复杂视觉生成的全自动、强对齐 AIGC 智能体框架
+# 🛡️AIGC-Nexus 面向复杂视觉生成的全自动、强对齐 AIGC 智能体框架
 
 ![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Framework](https://img.shields.io/badge/Framework-MetaGPT%20%7C%20vLLM-green)
 
-**PerfGuard** 是一个开箱即用的多智能体（Multi-Agent）AIGC 工作流调度系统。它专为解决当前大语言模型（LLM）在调用底层生图或图像编辑工具时经常发生的**“调度幻觉”（即由于不懂底层模型真实能力边界，导致任务规划崩溃和工具乱选）**而设计。
+**** 是一个开箱即用的多智能体（Multi-Agent）AIGC 工作流调度系统。它专为解决当前大语言模型（LLM）在调用底层生图或图像编辑工具时经常发生的**“调度幻觉”（即由于不懂底层模型真实能力边界，导致任务规划崩溃和工具乱选）**而设计。
 
-通过引入量化的多维性能矩阵与基于真实视觉反馈的强化微调闭环，PerfGuard 实现了从**模糊的文本意图**到**最优视觉生成工具**的精准、动态分发。
+通过引入量化的多维性能矩阵与基于真实视觉反馈的强化微调闭环，AIGC-Nexus 实现了从**模糊的文本意图**到**最优视觉生成工具**的精准、动态分发。
 
 ---
 
 ## 🚀 核心特性与工程价值
 
-在构建长链路的图文生成 Agent 时，单纯依靠 Prompt 让 LLM 挑选工具（如 FLUX, SD3, 各种 Edit 模型）往往面临极高的失败率。PerfGuard 提供了工业级的解法：
+在构建长链路的图文生成 Agent 时，单纯依靠 Prompt 让 LLM 挑选工具（如 FLUX, SD3, 各种 Edit 模型）往往面临极高的失败率。AIGC-Nexus 提供了工业级的解法：
 
 * 🎯 **基于性能矩阵的动态路由 **
   彻底告别大模型的“盲盒式”文本匹配。系统内置了涵盖色彩、空间关系、材质等 14 个维度的量化性能矩阵，通过多维向量点乘计算，为每一个 Sub-task 动态匹配最合适的底层模型，将不确定的调度转化为确定性的数学寻优。
@@ -37,10 +37,10 @@
 
 ```bash
 
-cd aiagent
+cd AIGC-Nexus
 
-conda create -n perfguard python=3.10
-conda activate perfguard
+conda create -n AIGC-Nexus python=3.10
+conda activate AIGC-Nexus
 
 # 安装核心依赖
 pip install -r requirements.txt
