@@ -84,3 +84,22 @@ result.final_image.save("output_cyberpunk.png")
 
 # 查看 Agent 的思考与调度轨迹
 print(result.planning_trajectory)
+
+
+
+/AIGC-Nexus
+├── configs/             # 系统配置、模型路由矩阵与 Agent Prompts
+├── AIGC-Nexus/           # 核心源码包
+│   ├── agents/          # 多智能体角色定义 (Analyst, Planner, Worker, Evaluator)
+│   ├── routing/         # PASM 性能感知路由模块 & APU 动态更新引擎
+│   ├── tools/           # 底层视觉模型接入层 (Diffusers/ControlNet 封装)
+│   └── trainer/         # CAPO 规划器 DPO 微调脚本
+├── examples/            # 常用使用案例与 Jupyter Notebooks
+├── scripts/             # 一键启动、环境测试脚本
+├── requirements.txt     # 依赖清单
+└── README.md
+
+
+
+
+
