@@ -1,104 +1,101 @@
-# 🛡️AIGC-Nexus 面向复杂视觉生成的全自动、强对齐 AIGC 智能体框架
+# 🛡️ AIGC-Nexus: A Fully Automated, Strongly Aligned AIGC Agent Framework for Complex Visual Generation
 
 ![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Framework](https://img.shields.io/badge/Framework-MetaGPT%20%7C%20vLLM-green)
 
-**** 是一个开箱即用的多智能体（Multi-Agent）AIGC 工作流调度系统。它专为解决当前大语言模型（LLM）在调用底层生图或图像编辑工具时经常发生的**“调度幻觉”（即由于不懂底层模型真实能力边界，导致任务规划崩溃和工具乱选）**而设计。
+**** is an out-of-the-box Multi-Agent AIGC workflow orchestration system. It is specifically designed to address the "Scheduling Hallucination"—a common issue where Large Language Models (LLMs) fail when invoking underlying image generation or editing tools, resulting in task planning breakdowns and arbitrary tool selection due to a lack of understanding regarding the actual capability boundaries of the underlying models.
 
-通过引入量化的多维性能矩阵与基于真实视觉反馈的强化微调闭环，AIGC-Nexus 实现了从**模糊的文本意图**到**最优视觉生成工具**的精准、动态分发。
+By introducing a quantified, multi-dimensional performance matrix alongside a closed-loop reinforcement fine-tuning mechanism based on real-world visual feedback, AIGC-Nexus achieves a precise and dynamic distribution process—seamlessly translating **vague textual intentions** into the **optimal visual generation tools**.
 
 ---
 
-## 🚀 核心特性与工程价值
+## 🚀 Core Features and Engineering Value
 
-在构建长链路的图文生成 Agent 时，单纯依靠 Prompt 让 LLM 挑选工具（如 FLUX, SD3, 各种 Edit 模型）往往面临极高的失败率。AIGC-Nexus 提供了工业级的解法：
+When building long-chain agents for text-to-image generation, relying solely on text prompts to let LLMs select tools (such as FLUX, SD3, or various editing models) often leads to extremely high failure rates. AIGC-Nexus offers an industrial-grade solution:
 
-* 🎯 **基于性能矩阵的动态路由 **
-  彻底告别大模型的“盲盒式”文本匹配。系统内置了涵盖色彩、空间关系、材质等 14 个维度的量化性能矩阵，通过多维向量点乘计算，为每一个 Sub-task 动态匹配最合适的底层模型，将不确定的调度转化为确定性的数学寻优。
-* 🔄 **基于反馈的在线自适应进化 **
-  告别一成不变的静态跑分。系统引入了 Exploration-Exploitation（探索-利用）策略，在推理时利用 MLLM 作为判别器对并发生成结果进行打分，动态修正工具库的性能权重。让你的智能体在真实业务中“越跑越准”。
-* 🧠 **对齐物理底层能力的规划器 **
-  基于 DPO 偏好对齐架构，利用底层工具的实际执行效果作为 Reward 信号，反向微调最上层的 Planner 模型（支持 Qwen3 系列等）。让宏观的任务拆解逻辑（例如“先处理背景再修改主体”）深度契合底层扩散模型的物理执行极限。
+* 🎯 **Performance Matrix-Based Dynamic Routing**
+Say goodbye to the "blind box" style of text matching often seen in large models. The system features a built-in, quantified performance matrix covering 14 dimensions—including color, spatial relationships, and textures. Through multi-dimensional vector dot-product calculations, it dynamically matches the most suitable underlying model to each sub-task, transforming uncertain scheduling into a deterministic mathematical optimization process.
+* 🔄 **Feedback-Based Online Adaptive Evolution**
+Move beyond rigid, static benchmarking scores. The system incorporates an "Exploration-Exploitation" strategy; during inference, it utilizes a Multimodal Large Language Model (MLLM) as a discriminator to score concurrent generation results, thereby dynamically adjusting the performance weights within the tool library. This ensures your agents become "more accurate with every run" within real-world business scenarios. * 🧠 **A Planner Aligned with Underlying Physical Capabilities**
+Built upon a DPO (Direct Preference Optimization) alignment architecture, this system utilizes the actual execution outcomes of underlying tools as a reward signal to fine-tune the top-level Planner model (supporting models such as the Qwen3 series). This ensures that the high-level task decomposition logic—for instance, "process the background first, then modify the subject"—is deeply aligned with the physical execution limits of the underlying diffusion models.
 
-## 📊 性能表现
+## 📊 Performance Highlights
 
-- **调度准确率飞跃**：在复杂的长尾调度场景中，工具分发错误率由传统文本方案的 **77.8%** 断崖式降低至 **14.2%**。
-- **降本增效**：得益于量化的矩阵寻址，绕开了 LLM 冗长的上下文推理，调度延迟和 Token 消耗极低，轻松支持未来挂载成百上千个定制化 LoRA / Checkpoint 的巨型工具集。
-- **生图质量霸榜**：在复杂多意图、多轮次编辑任务中，端到端的语义对齐度、视觉推理逻辑与空间一致性均达到 SOTA 级别。
+- **Leap in Scheduling Accuracy:** In complex, long-tail scheduling scenarios, the tool dispatch error rate plummeted from **77.8%** (typical of traditional text-based approaches) to a mere **14.2%**.
+- **Cost Reduction & Efficiency Gains:** Thanks to quantized matrix addressing—which bypasses the lengthy contextual reasoning typically required by LLMs—scheduling latency and token consumption are kept extremely low. This architecture effortlessly supports the future integration of massive toolsets comprising hundreds or even thousands of customized LoRA adapters and Checkpoints.
+- **Chart-Topping Image Generation Quality:** In complex, multi-intent, and multi-turn editing tasks, the system achieves State-of-the-Art (SOTA) performance across end-to-end semantic alignment, visual reasoning logic, and spatial consistency.
 
 ---
 
 ## 🛠️ 快速上手 (Quick Start)
 
-### 1. 环境准备
+## Environment Setup
+1. Install Conda Environment
+```shell
+conda create -n PerfGuard python=3.10
+conda activate PerfGuard
+```
 
-建议使用 Conda 创建纯净的 Python 环境：
+2. Install [MetaGPT](https://github.com/FoundationAgents/MetaGPT)
 
-```bash
+3. Please go to the following GitHub repository to install the necessary tool dependencies.
+```shell
+https://github.com/HaozheZhao/UltraEdit
+https://github.com/HuiZhang0812/CreatiLayout
+https://github.com/stepfun-ai/Step1X-Edit
+https://github.com/weichow23/AnySD
+https://github.com/bytedance/DreamO
+https://github.com/Xiaojiu-z/EasyControl
+https://github.com/tencent-ailab/IP-Adapter
+```
 
-cd AIGC-Nexus
+4. Modify the relevant code to avoid environment conflicts.
+```shell
+# Insert the following code into './Step1X_Edit/inference.py'
+import sys
+sys.path.append("Step1X_Edit")
+# Insert the following code into  './AnySD/anysd/src/model.py'
+import sys
+sys.path.append("AnySD")
+```
 
-conda create -n AIGC-Nexus python=3.10
-conda activate AIGC-Nexus
+5. Install the remaining dependencies
+```shell
+pip install -r requirement.txt
+```
 
-# 安装核心依赖
-pip install -r requirements.txt
+6. Download the planner checkpoint zip file and unzip it.
+```shell
+link: https://pan.baidu.com/s/1DyK9rZeTebdwAKfl_pl6DQ?pwd=ziy2 passward: ziy2 
+```
 
-2. 配置模型与 API 服务
-本项目默认支持通过 vLLM 部署的开源模型（如 Qwen3-VL/14B/8B）以及 OpenAI 的 GPT-4o 接口。请在项目根目录复制一份环境变量文件并填入你的配置：
+7. Deploy LLM locally using vLLM
+```shell
+export VLLM_USE_MODELSCOPE=True 
+vllm serve Qwen/Qwen3-14B   --port 8001
+vllm serve your_planner_checkpoint  --port 8002
+```
 
-Bash
-cp .env.example .env
-在 .env 中配置：
+8. Modify the LLM config file under `./config`
 
-Code snippet
-# LLM & MLLM 配置
-OPENAI_API_KEY="sk-your-api-key"
-VLLM_ENDPOINT="http://localhost:8000/v1"
-VLLM_MODEL_NAME="Qwen/Qwen3-14B-Instruct"
-
-# 工具库路径配置 (Stable Diffusion, FLUX 等)
-TOOLS_CACHE_DIR="/path/to/your/models"
-3. 运行极简 Demo
-只需几行代码，即可体验 AIGC-Nexus 强大的端到端视觉任务规划与生成能力：
-
-Python
-from AIGC-Nexus import AgentSystem
-from AIGC-Nexus.config import load_config
-
-# 1. 加载系统配置与预置的工具性能矩阵
-config = load_config("configs/default_pipeline.yaml")
-
-# 2. 初始化 PerfGuard 多智能体系统
-agent_sys = AgentSystem(config)
-
-# 3. 输入复杂的生成/编辑指令
-user_prompt = "生成一张赛博朋克风格的夜景街道，重点是一辆飞驰的重型摩托车在空中留下长长的蓝色光轨，背景是巨大的全息广告牌正在播放汉字。"
-
-# 4. 执行自动拆解、模型路由与最终生成
-result = agent_sys.run(prompt=user_prompt)
-
-# 保存最终结果
-result.final_image.save("output_cyberpunk.png")
-
-# 查看 Agent 的思考与调度轨迹
-print(result.planning_trajectory)
-
+## Run the program
+```shell
+python run.py
+```
 
 
 /AIGC-Nexus
-├── configs/             # 系统配置、模型路由矩阵与 Agent Prompts
-├── AIGC-Nexus/           # 核心源码包
-│   ├── agents/          # 多智能体角色定义 (Analyst, Planner, Worker, Evaluator)
-│   ├── routing/         # PASM 性能感知路由模块 & APU 动态更新引擎
-│   ├── tools/           # 底层视觉模型接入层 (Diffusers/ControlNet 封装)
-│   └── trainer/         # CAPO 规划器 DPO 微调脚本
-├── examples/            # 常用使用案例与 Jupyter Notebooks
-├── scripts/             # 一键启动、环境测试脚本
-├── requirements.txt     # 依赖清单
+├── configs/             # System configurations, model routing matrix, and Agent Prompts
+├── AIGC-Nexus/           # Core source code package
+│   ├── agents/          # Multi-agent role definitions (Analyst, Planner, Worker, Evaluator)
+│   ├── routing/         # PASM Performance-Aware Routing Module & APU Dynamic Update Engine
+│   ├── tools/           # Low-level vision model integration layer (Diffusers/ControlNet wrappers)
+│   └── trainer/         # CAPO Planner DPO fine-tuning scripts
+├── examples/            # Common use cases and Jupyter Notebooks
+├── scripts/             # One-click startup and environment testing scripts
+├── requirements.txt     # Dependency list
 └── README.md
-
 
 
 
