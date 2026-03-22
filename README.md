@@ -33,8 +33,8 @@ Built upon a DPO (Direct Preference Optimization) alignment architecture, this s
 ## Environment Setup
 1. Install Conda Environment
 ```shell
-conda create -n PerfGuard python=3.10
-conda activate PerfGuard
+conda create -n AIGC-Nexus python=3.10
+conda activate AIGC-Nexus
 ```
 
 2. Install [MetaGPT](https://github.com/FoundationAgents/MetaGPT)
